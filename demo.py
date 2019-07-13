@@ -140,6 +140,9 @@ def main():
 
             dismap = utils.fixed_resize(dismap, (450, 450)).astype(np.uint8)
 
+            cv2.imwrite('dismap.png', dismap)
+            cv2.imwrite('tmp.png', tmp*255)
+
             dismap = np.expand_dims(dismap, axis=-1)
 
             image = image[:, :, ::-1] # change to rgb

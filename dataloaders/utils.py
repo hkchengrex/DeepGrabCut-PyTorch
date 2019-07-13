@@ -50,15 +50,19 @@ def compute_dismap(dismap, bbox):
 
     tmp = (tmp == 0).astype(np.uint8)
 
-    dismap = cv2.distanceTransform(tmp, cv2.DIST_L2, cv2.DIST_MASK_PRECISE)  # compute distance inside and outside bounding box
+    dismap = cv2.distanceTransform(tmp, cv2.DIST_L2, cv2.DIST_MASK_3)  # compute distance inside and outside bounding box
+
     dismap = tmp_ * dismap + 128
 
     dismap[dismap > 255] = 255
     dismap[dismap < 0] = 0
+    # dismap = 255 - dismap
 
     dismap = dismap.astype(np.uint8)
 
-    return dismap
+    tmp = fixed_resize(tmp, (450, 450)).astype(np.uint8)
+
+    return dismap, tmp
 
 
 def add_turbulence(bbox, v=0.15):
